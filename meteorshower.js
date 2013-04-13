@@ -29,18 +29,21 @@ if (Meteor.isClient) {
   //Meteor.startup(function () {
     Session.set('nav_settings', {name: 1, date: -1, score:-1});
     Session.set('sort_by', "date"); // default to sorting by date, descending
+    Session.set('filter', '');
   //});
   Template.list.items = function () {
     var nav_config = Session.get('nav_settings');
     var sort_by = Session.get('sort_by');
     var sort_order = {};
+    var filter = Session.get('filter');
+    if (!filter || filter == undefined){ filter = '' };
     sort_order[sort_by] = nav_config[sort_by] || -1;
-    return Showcase.find({}, {sort: sort_order}).fetch();
+    return Showcase.find({ name: { $regex: filter, $options: 'i'}}, {sort: sort_order}).fetch();
   };
   Template.item.selected = function(){
     return Session.equals("selected_item", this._id) ? "selected" : '';
   };
-  Template.submit.events({
+  Template.dash.events({
     'click input.inc': function () {
       Showcase.update(Session.get("selected_item"), {$inc: {score: 5}});
     }   
@@ -55,7 +58,7 @@ if (Meteor.isClient) {
     return Session.equals("sort_by", 'score') ? "active" : '';
   };
   Template.nav.name_dir = function(){
-    return Template.nav.buttonLogo('name', 1);
+    return Template.nav.buttonLogo('name', -1);
   };
   Template.nav.date_dir = function(){
     return Template.nav.buttonLogo('date', -1);
@@ -86,17 +89,17 @@ if (Meteor.isClient) {
     }
   });
   Template.list.events({
+    'dblclick': function () {
+      $('#modal_edit').modal('show');
+    },   
     'click': function () {
       Session.set("selected_item", this._id);
       console.log("selected_item: " + this._id)
     }   
   }); 
-  Template.submit.username = function () {
-    if(Meteor.user()){
-      return Meteor.user().profile.name;
-    }else{
-      return '';
-    }
+  Template.nav.username = function () {
+    var u = Meteor.user();
+    return u && u.profile && u.profile.name;
   };
   Template.nav.buttonLogo = function (nav_button, direction) {
     var nav_controls = Session.get('nav_settings');

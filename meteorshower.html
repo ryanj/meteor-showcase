@@ -5,7 +5,9 @@
 <body>
   {{> nav}} 
   {{> list}} 
+  {{> dash}}
   {{> submit}}
+  {{> edit}}
 </body>
 
 <template name="list">
@@ -26,12 +28,77 @@
   </div>
 </template>
 
+<template name="dash">
+  <input type="button" style='margin-left:20px;' class="inc" onclick="document.location.hash='#inc';" value="UpVote" /><br/>
+  <input type="button" style='margin-left:20px;' class="new" onclick="$('#modal_console').modal('show');" value="New" />
+</template>
+
+<template name="edit">
+  <div class="test-area modal fade in" style="display:none;" id="modal_edit">
+  <div class="modal-header">
+    <a href="#" data-dismiss="modal" class="close">×</a>
+    <h3 class="method_test_title">Submit App</h3>
+  </div>
+  <div style="padding:0px;overflow:hidden;" class="modal-body">
+    <form id="test-code" class="form-horizontal" action="#" onsubmit="$('#modal_edit').modal('hide');return false;">
+      <fieldset style="margin:0px;padding:0px;">
+        <div id="method_test_fields" class="fields round-top method_test_fields"><div class="test_inputs">
+<div class="control-group">
+<label class="control-label" for="keywords">keywords</label>
+<div class="controls">
+<input id="keywords" name="keywords" size="30" type="text" placeholder="">
+</div>
+</div>
+<div class="control-group">
+<label class="control-label" for="page">page</label>
+<div class="controls">
+<input id="page" name="page" size="30" type="text" placeholder="">
+</div>
+</div>
+</div>
+</div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#" style="float:right;margin-left:15px;" onclick="test_submit();" class="btn primary">Submit Request</a>
+    <a href="#" data-dismiss="modal" style="float:right;" onclick="$('#modal_edit').modal('hide');" class="btn secondary">Cancel</a>
+  </div>
+</div>
+</template>
+
 <template name="submit">
-  <p>place popup content (submit form) here?</p>
-  {{#if username}}
-    <h5>{{ username }}</h5>
-  {{/if}}
-  <input type="button" class="inc" onclick="document.location.hash='#submit';" value="Submit an App" />
+  <div class="test-area modal fade in" style="display:none;" id="modal_console">
+  <div class="modal-header">
+    <a href="#" data-dismiss="modal" class="close">×</a>
+    <h3 class="method_test_title">Submit App</h3>
+  </div>
+  <div style="padding:0px;overflow:hidden;" class="modal-body">
+    <form id="test-code" class="form-horizontal" action="#" onsubmit="$('#modal_console').modal('hide');return false;">
+      <fieldset style="margin:0px;padding:0px;">
+        <div id="method_test_fields" class="fields round-top method_test_fields"><div class="test_inputs">
+<div class="control-group">
+<label class="control-label" for="keywords">keywords</label>
+<div class="controls">
+<input id="keywords" name="keywords" size="30" type="text" placeholder="">
+</div>
+</div>
+<div class="control-group">
+<label class="control-label" for="page">page</label>
+<div class="controls">
+<input id="page" name="page" size="30" type="text" placeholder="">
+</div>
+</div>
+</div>
+</div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#" style="float:right;margin-left:15px;" onclick="test_submit();" class="btn primary">Submit Request</a>
+    <a href="#" data-dismiss="modal" style="float:right;" onclick="$('#modal_console').modal('hide');" class="btn secondary">Cancel</a>
+  </div>
+</div>
 </template>
 
 <template name="nav">
@@ -43,10 +110,18 @@
     <li class='dropdown'>
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account<b class="caret"></b></a>
       <ul role="menu" class='dropdown-menu'>
-        <li><a class='inc' href="#submit">Submit</a></li>
+        <li><a class='inc' onclick="$('#modal_console').modal('show');" href="#submit">Submit an Application</a></li>
         <li role="presentation" class="divider"></li>
       {{#if currentUser}}
-        <li><a id='logout_btn' href="#logout">Logout</a></li>
+        <li>
+          <p style='font-size:smaller;text-align:center;'>
+            <a href='#'>
+              <img style='margin: 0px 5%; width:90%;' src='https://a248.e.akamai.net/camo.github.com/5e6eb0b00d714eb5b8ec84254205c61c2a97c68d/687474703a2f2f6f63746f6465782e6769746875622e636f6d2f696d616765732f77616c646f6361742e6a7067'/><br/>
+              <span style='font-weight:bold;margin: 0px 10%;'>{{ username }}</span>
+            </a>
+          </p>
+          <a id='logout_btn' href="#logout">Logout</a>
+        </li>
       {{else}}
         <li><a id='login_btn' href="#login">Login</a></li>
       {{/if}}
@@ -56,7 +131,7 @@
   <ul class="nav pull-right" role='navigation'>
     <li>
       <form class="navbar-search">
-        <input type="text" class="search-query" placeholder="Search">
+        <input onkeypress="Session.set('filter', this.value);" type="text" class="search-query" placeholder="Search">
       </form>
     </li>
   </ul>
