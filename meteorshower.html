@@ -8,6 +8,7 @@
   {{> dash}}
   {{> submit}}
   {{> edit}}
+  {{> view}}
 </body>
 
 <template name="list">
@@ -30,73 +31,100 @@
 
 <template name="dash">
   <input type="button" style='margin-left:20px;' class="inc" onclick="document.location.hash='#inc';" value="UpVote" /><br/>
-  <input type="button" style='margin-left:20px;' class="new" onclick="$('#modal_console').modal('show');" value="New" />
+  <input type="button" style='margin-left:20px;' class="new" onclick="$('#modal_create').modal('show');" value="New" />
+</template>
+
+<template name="view">
+  <div class="test-area modal fade in" style="display:none;" id="modal_view">
+  <div class="modal-header">
+    <a href="#" style="margin-left:15px;" data-dismiss="modal" class="close pull-right;">&times;</a>
+    <h3 class="item_title">App Name</h3>
+  </div>
+  <div style="padding:0px;overflow:hidden;" class="modal-body">
+    <p>App Image</p>
+    <p>App Name</p>
+    <p>App Description</p>
+    <p>App Author</p>
+    <p>App Submit Date</p>
+    <p>App Score</p>
+    <p>App Links</p>
+    <p style='text-align:center;margin-bottom:25px;'><a href="#" onclick="console.log('Opening app...');" style='text-decoration:none;' class="btn-large btn-inverse">Run on OpenShift <b class='icon-cog'></b></a></p>
+  </div>
+  <div class="modal-footer">
+    {{# if currentUser }}<a href="#" onclick="( $('#modal_view').modal('hide') && $('#modal_edit').modal('show'))" style='margin-right:10px;' class="pull-left btn btn-info">Settings <b class='icon-wrench'></b></a>{{/if}}
+    <a href="#" style="margin-left:15px;" onclick="console.log('Opening app...');" class="pull-right btn btn-primary">Visit <b class='icon-globe'></b></a>
+    <a href="#" data-dismiss="modal" onclick="$('#modal_view').modal('hide');" class="btn pull-right">Cancel <b class='icon-remove'></b></a>
+  </div>
+</div>
 </template>
 
 <template name="edit">
   <div class="test-area modal fade in" style="display:none;" id="modal_edit">
   <div class="modal-header">
-    <a href="#" data-dismiss="modal" class="close">×</a>
+    <a href="#" data-dismiss="modal" class="close">&times;</a>
     <h3 class="method_test_title">Submit App</h3>
   </div>
   <div style="padding:0px;overflow:hidden;" class="modal-body">
     <form id="test-code" class="form-horizontal" action="#" onsubmit="$('#modal_edit').modal('hide');return false;">
       <fieldset style="margin:0px;padding:0px;">
-        <div id="method_test_fields" class="fields round-top method_test_fields"><div class="test_inputs">
-<div class="control-group">
-<label class="control-label" for="keywords">keywords</label>
-<div class="controls">
-<input id="keywords" name="keywords" size="30" type="text" placeholder="">
-</div>
-</div>
-<div class="control-group">
-<label class="control-label" for="page">page</label>
-<div class="controls">
-<input id="page" name="page" size="30" type="text" placeholder="">
-</div>
-</div>
-</div>
-</div>
+        <div id="method_test_fields" class="fields round-top method_test_fields">
+          <div class="test_inputs">
+            <div class="control-group">
+              <label class="control-label" for="keywords">keywords</label>
+              <div class="controls">
+                <input id="keywords" name="keywords" size="30" type="text" placeholder="">
+              </div>
+            </div> 
+            <div class="control-group">
+              <label class="control-label" for="page">page</label>
+              <div class="controls">
+                <input id="page" name="page" size="30" type="text" placeholder="">
+              </div>
+            </div>
+          </div>
+        </div>
       </fieldset>
     </form>
   </div>
   <div class="modal-footer">
-    <a href="#" style="float:right;margin-left:15px;" onclick="test_submit();" class="btn primary">Submit Request</a>
-    <a href="#" data-dismiss="modal" style="float:right;" onclick="$('#modal_edit').modal('hide');" class="btn secondary">Cancel</a>
+    <a href="#" style="margin-left:15px;" onclick="test_submit();" class="btn-primary btn pull-right">Save <b class='icon-ok'></b></a>
+    <a href="#" onclick="test_submit();" class="btn-danger btn pull-left">Delete <b class='icon-trash'></b></a>
+    <a href="#" data-dismiss="modal" onclick="$('#modal_edit').modal('hide');" class="btn pull-right">Cancel <b class='icon-remove'></b></a>
   </div>
 </div>
 </template>
 
 <template name="submit">
-  <div class="test-area modal fade in" style="display:none;" id="modal_console">
+  <div class="test-area modal fade in" style="display:none;" id="modal_create">
   <div class="modal-header">
-    <a href="#" data-dismiss="modal" class="close">×</a>
+    <a href="#" data-dismiss="modal" class="close">&times;</a>
     <h3 class="method_test_title">Submit App</h3>
   </div>
   <div style="padding:0px;overflow:hidden;" class="modal-body">
-    <form id="test-code" class="form-horizontal" action="#" onsubmit="$('#modal_console').modal('hide');return false;">
+    <form id="test-code" class="form-horizontal" action="#" onsubmit="$('#modal_create').modal('hide');return false;">
       <fieldset style="margin:0px;padding:0px;">
-        <div id="method_test_fields" class="fields round-top method_test_fields"><div class="test_inputs">
-<div class="control-group">
-<label class="control-label" for="keywords">keywords</label>
-<div class="controls">
-<input id="keywords" name="keywords" size="30" type="text" placeholder="">
-</div>
-</div>
-<div class="control-group">
-<label class="control-label" for="page">page</label>
-<div class="controls">
-<input id="page" name="page" size="30" type="text" placeholder="">
-</div>
-</div>
-</div>
-</div>
+        <div id="method_test_fields" class="fields round-top method_test_fields">
+          <div class="test_inputs">
+            <div class="control-group">
+              <label class="control-label" for="keywords">keywords</label>
+              <div class="controls">
+                <input id="keywords" name="keywords" size="30" type="text" placeholder="">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="page">page</label>
+              <div class="controls">
+                <input id="page" name="page" size="30" type="text" placeholder="">
+              </div>
+            </div>
+          </div>
+        </div>
       </fieldset>
     </form>
   </div>
   <div class="modal-footer">
-    <a href="#" style="float:right;margin-left:15px;" onclick="test_submit();" class="btn primary">Submit Request</a>
-    <a href="#" data-dismiss="modal" style="float:right;" onclick="$('#modal_console').modal('hide');" class="btn secondary">Cancel</a>
+    <a href="#" style="margin-left:15px;" onclick="test_submit();" class="btn btn-primary pull-right">Submit <b class='icon-ok'></b></a>
+    <a href="#" data-dismiss="modal" onclick="$('#modal_create').modal('hide');" class="btn pull-right">Cancel <b class='icon-remove'></b></a>
   </div>
 </div>
 </template>
@@ -110,7 +138,7 @@
     <li class='dropdown'>
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account<b class="caret"></b></a>
       <ul role="menu" class='dropdown-menu'>
-        <li><a class='inc' onclick="$('#modal_console').modal('show');" href="#submit">Submit an Application</a></li>
+        <li><a onclick="$('#modal_create').modal('show');" href="#submit">Submit an Application</a></li>
         <li role="presentation" class="divider"></li>
       {{#if currentUser}}
         <li>

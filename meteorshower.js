@@ -90,7 +90,7 @@ if (Meteor.isClient) {
   });
   Template.list.events({
     'dblclick': function () {
-      $('#modal_edit').modal('show');
+      $('#modal_view').modal('show');
     },   
     'click': function () {
       Session.set("selected_item", this._id);
