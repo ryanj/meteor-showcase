@@ -15,8 +15,8 @@ if (Meteor.isServer) {
   });
   Accounts.loginServiceConfiguration.insert({
     service: "github",
-    clientId: (process.env.GITHUB_CLIENT || "cc02855bd41dbfc4be72"),
-    secret: (process.env.GITHUB_SECRET || "443ea5d64be6afada4acd946cf5b49878f4af4c8")
+    clientId: 'cc02855bd41dbfc4be72',
+    secret: '443ea5d64be6afada4acd946cf5b49878f4af4c8'
   });
 
   Meteor.publish("showcase-items", function () {
@@ -43,10 +43,13 @@ if (Meteor.isClient) {
   Template.item.selected = function(){
     return Session.equals("selected_item", this._id) ? "selected" : '';
   };
-  Template.dash.events({
-    'click input.inc': function () {
+  Template.item.events({
+    'click a.inc': function () {
       Showcase.update(Session.get("selected_item"), {$inc: {score: 5}});
-    }   
+    },
+    'click a.dec': function () {
+      Showcase.update(Session.get("selected_item"), {$inc: {score: -5}});
+    }
   }); 
   Template.nav.name_active = function(){
     return Session.equals("sort_by", 'name') ? "active" : '';
@@ -66,6 +69,50 @@ if (Meteor.isClient) {
   Template.nav.score_dir = function(){
     return Template.nav.buttonLogo('score', -1);
   };
+  Template.edit.events({
+    'click a.save' : function (){
+      $('#modal_edit').modal('hide');
+      var validation_passed = true;
+      //ask for auth, redirect away?
+      //read fields (use jquery)
+      //validate data and error back, or
+
+      //load to 'View' modal
+      if(validation_passed){
+        //insert new data
+
+        $('#modal_view').modal('show');
+      }else{
+        //highlight errors
+        $('#modal_edit').modal('show');
+        return false;
+      }
+    },
+    'click a.delete' : function (){
+      //ask for auth, redirect away?
+    }
+  });
+  Template.submit.events({
+    'click .submit' : function (){
+      $('#modal_create').modal('hide');
+      var validation_passed = true;
+      //save everything in localstorage?
+      //ask for auth, redirect away?
+      //read fields (use jquery)
+      //validate data and error back, or
+
+      //load to 'View' modal
+      if(validation_passed){
+        //insert new data
+        //Session.set("selected_item", this._id);
+        $('#modal_view').modal('show');
+      }else{
+        //highlight errors
+        $('#modal_create').modal('show');
+        return false;
+      }
+    }
+  });
   Template.nav.events({
     'click #date_sort' : function (){
       Template.nav.toggleNav('date');
