@@ -43,6 +43,29 @@ if (Meteor.isClient) {
     sort_order[sort_by] = nav_config[sort_by] || -1;
     return Showcase.find({ name: { $regex: filter, $options: 'i'}}, {sort: sort_order}).fetch();
   };
+  Template.item.timestring = function(){
+    var time = new Date(this.date);
+    var time_string = '';
+    var minutes = time.getMinutes();
+    var hours = time.getHours();
+    var ampm = 'am';
+    if( minutes < 10 ){
+      minutes = '0' + minutes;
+    }
+    if( hours === 0 ){
+        hours = 12;
+      } else if ( hours >= 12 ){
+        ampm = 'pm';
+      if( hours !== 12){
+        hours = hours - 12;
+      }
+    }
+    return time_string += hours + ':' + minutes + ampm;
+  };
+  Template.item.datestring = function(){
+    var date = new Date(this.date);
+    return date.toDateString();
+  };
   Template.item.selected = function(){
     return Session.equals("selected_item", this._id) ? "selected" : '';
   };
@@ -89,7 +112,8 @@ if (Meteor.isClient) {
     return Session.get('image_url');
   };
   Template.view.date = function(){
-    return Session.get('date');
+    var s= new Date(Session.get('date'));
+    return s.toDateString();
   };
   Template.view.source_url = function(){
     return Session.get('source_url');
@@ -108,6 +132,22 @@ if (Meteor.isClient) {
   };
   Template.edit.cartridge_deps = function(){
     return Session.get('cartridge_deps');
+  };
+  Template.view.clone_url = function(){
+    try{
+      var name = Session.get('name');
+      var source = Session.get('source_url');
+      var cart_deps = Session.get('cartridge_deps');
+      var carts = cart_deps.split(',');
+      var cartstring = '';
+      carts.forEach(function(cart){
+        cartstring += "&cartridges[]="+cart;
+      });
+      var link = "https://openshift.redhat.com/app/console/application_types/custom?name="+name+"&initial_git_url="+source+cartstring;
+    }catch(err){
+      var link = "#";
+    }
+    return link;
   };
   Template.view.author = function(){
     return Session.get('author');
