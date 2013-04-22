@@ -13,10 +13,12 @@ if (Meteor.isServer) {
         Showcase.insert({name: names[i], score: Math.floor(Random.fraction()*10)*5, date: new Date()});
     }
   });
+  var github_client_id = process.env.GITHUB_CLIENT || 'cc02855bd41dbfc4be72';
+  var github_client_secret = process.env.GITHUB_SECRET || '443ea5d64be6afada4acd946cf5b49878f4af4c8';
   Accounts.loginServiceConfiguration.insert({
     service: "github",
-    clientId: 'cc02855bd41dbfc4be72',
-    secret: '443ea5d64be6afada4acd946cf5b49878f4af4c8'
+    clientId: github_client_id,
+    secret: github_client_secret
   });
 
   Meteor.publish("showcase-items", function () {
