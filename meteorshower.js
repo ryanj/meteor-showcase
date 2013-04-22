@@ -25,6 +25,9 @@ if (Meteor.isServer) {
 }
 
 if (Meteor.isClient) {
+  $('#modal_edit').modal('show').on('shown', function(){
+    $('#modal_view').modal('hide');
+  });
   Meteor.subscribe("showcase-items");
   //Meteor.startup(function () {
     Session.set('nav_settings', {name: 1, date: -1, score:-1});
@@ -43,14 +46,6 @@ if (Meteor.isClient) {
   Template.item.selected = function(){
     return Session.equals("selected_item", this._id) ? "selected" : '';
   };
-  Template.item.events({
-    'click a.inc': function () {
-      Showcase.update(Session.get("selected_item"), {$inc: {score: 5}});
-    },
-    'click a.dec': function () {
-      Showcase.update(Session.get("selected_item"), {$inc: {score: -5}});
-    }
-  }); 
   Template.nav.name_active = function(){
     return Session.equals("sort_by", 'name') ? "active" : '';
   };
@@ -69,6 +64,63 @@ if (Meteor.isClient) {
   Template.nav.score_dir = function(){
     return Template.nav.buttonLogo('score', -1);
   };
+  Template.view.description = function(){
+    return Session.get('description');
+  };
+  Template.edit.description = function(){
+    return Session.get('description');
+  };
+  Template.view.app_name = function(){
+    return Session.get('name');
+  };
+  Template.edit.app_name = function(){
+    return Session.get('name');
+  };
+  Template.view.score = function(){
+    return Session.get('score');
+  };
+  Template.edit.score = function(){
+    return Session.get('score');
+  };
+  Template.view.image_url = function(){
+    return Session.get('image_url');
+  };
+  Template.edit.image_url = function(){
+    return Session.get('image_url');
+  };
+  Template.view.date = function(){
+    return Session.get('date');
+  };
+  Template.view.source_url = function(){
+    return Session.get('source_url');
+  };
+  Template.edit.source_url = function(){
+    return Session.get('source_url');
+  };
+  Template.view.demo_url = function(){
+    return Session.get('demo_url');
+  };
+  Template.edit.demo_url = function(){
+    return Session.get('demo_url');
+  };
+  Template.view.cartridge_deps = function(){
+    return Session.get('cartridge_deps');
+  };
+  Template.edit.cartridge_deps = function(){
+    return Session.get('cartridge_deps');
+  };
+  Template.view.author = function(){
+    return Session.get('author');
+  };
+  Template.edit.author = function(){
+    return Session.get('author');
+  };
+  Template.view.events({
+    'click a.edit' : function (){
+      $('#modal_edit').modal('show');
+      $('#modal_view').modal('hide');
+    }
+  });
   Template.edit.events({
     'click a.save' : function (){
       $('#modal_edit').modal('hide');
@@ -77,11 +129,40 @@ if (Meteor.isClient) {
       //read fields (use jquery)
       //validate data and error back, or
 
+      var form_data = {};
+      var image_url = $('.edit .image_url').val() || "";
+      var score = Number($('.edit .score').val());
+      var author = Session.get('author');
+      form_data.name = $('.edit .name').val() || "";
+      form_data.description = $('.edit .description').val() || "&nbsp;";
+      form_data.score = (isNaN(score)) ? 0 : score;
+      form_data.image_url = (image_url.search('http') == 0) ? image_url : "https://www.openshift.com/sites/default/files/redhat_shipment.png";
+      form_data.source_url = $('.edit .source_url').val() || "https://github.com/openshift-quickstart";
+      form_data.demo_url = $('.edit .demo_url').val() || "";
+      form_data.cartridge_deps = $('.edit .cartridge_deps').val() || "";
+      form_data.author = author || "anonymous";
+      form_data._id = Session.get('selected_item');
+      form_data.date = new Date(Session.get('date'));
+      console.log("form_data:");
+      console.log(form_data);
+
       //load to 'View' modal
       if(validation_passed){
         //insert new data
+        console.log(form_data);
 
-        $('#modal_view').modal('show');
+        console.log("Showcase.update("+form_data._id+"," + JSON.stringify(form_data)+");");
+        var item = Showcase.update(form_data._id, form_data);
+        console.log("selected_item: " + form_data._id)
+        console.log(item);
+        Session.set("name", form_data.name);
+        Session.set("description", form_data.description);
+        Session.set("image_url", form_data.image_url);
+        Session.set("source_url", form_data.source_url);
+        Session.set("demo_url", form_data.demo_url);
+        Session.set("score", form_data.score);
+        Session.set("cartridge_deps", form_data.cartridge_deps);
+        Session.set("author", form_data.author);
       }else{
         //highlight errors
         $('#modal_edit').modal('show');
@@ -90,22 +171,56 @@ if (Meteor.isClient) {
     },
     'click a.delete' : function (){
       //ask for auth, redirect away?
+      $('#modal_edit').modal('hide');
+      var id = Session.get('selected_item');
+      Showcase.remove(id);
+      Session.set('selected_item', '');
     }
   });
   Template.submit.events({
     'click .submit' : function (){
       $('#modal_create').modal('hide');
+      var form_data = {};
       var validation_passed = true;
       //save everything in localstorage?
       //ask for auth, redirect away?
+      var u = Meteor.user();
       //read fields (use jquery)
       //validate data and error back, or
+      var score = Number($('.create .score').val());
+      var image_url = $('.create .image_url').val();
+      if( u && u.profile && u.profile.name){
+        form_data.author = u.profile.name;
+      }else{
+        form_data.author = "anonymous";
+      }
+      form_data.name = $('.create .name').val() || "";
+      form_data.description = $('.create .description').val() || "";
+      form_data.score = isNaN(score) ? 0 : score;
+      form_data.image_url = (image_url.search('http') == 0) ? image_url : "https://www.openshift.com/sites/default/files/redhat_shipment.png";
+      form_data.source_url = $('.create .source_url').val() || "https://github.com/openshift-quickstart";
+      form_data.demo_url = $('.create .demo_url').val() || "/";
+      form_data.cartridge_deps = $('.create .cartridge_deps').val() || "";
+      form_data.date = new Date();
 
       //load to 'View' modal
       if(validation_passed){
         //insert new data
-        //Session.set("selected_item", this._id);
-        $('#modal_view').modal('show');
+        console.log(form_data);
+        var id = Showcase.insert(form_data, function(err, id){
+          Session.set("selected_item", id);
+          Session.set("name", form_data.name);
+          Session.set("description", form_data.description);
+          Session.set("image_url", form_data.image_url);
+          Session.set("source_url", form_data.source_url);
+          Session.set("demo_url", form_data.demo_url);
+          Session.set("date", form_data.date);
+          Session.set("score", form_data.score);
+          Session.set("cartridge_deps", form_data.cartridge_deps);
+          Session.set("author", form_data.author);
+
+          $('#modal_view').modal('show');
+        });
       }else{
         //highlight errors
         $('#modal_create').modal('show');
@@ -135,13 +250,34 @@ if (Meteor.isClient) {
       });
     }
   });
-  Template.list.events({
+  Template.item.events({
+    'click a.inc': function () {
+      Showcase.update(Session.get("selected_item"), {$inc: {score: 5}});
+    },
+    'click a.dec': function () {
+      Showcase.update(Session.get("selected_item"), {$inc: {score: -5}});
+    },
     'dblclick': function () {
       $('#modal_view').modal('show');
     },   
+    'click a.view': function () {
+      console.log('not opening popup');
+      //$('#modal_view').modal('show');
+    },   
     'click': function () {
+      var item = Showcase.findOne({_id: this._id});
       Session.set("selected_item", this._id);
       console.log("selected_item: " + this._id)
+      console.log(item);
+      Session.set("name", (item.name) ? item.name : "App Name");
+      Session.set("description", (item.description) ? item.description : "foobar");
+      Session.set("image_url", item.image_url || "");
+      Session.set("source_url", item.source_url|| "");
+      Session.set("demo_url", item.demo_url || "");
+      Session.set("date", item.date || "");
+      Session.set("score", item.score || "");
+      Session.set("cartridge_deps", item.cartridge_deps || "");
+      Session.set("author", item.author || "");
     }   
   }); 
   Template.nav.username = function () {
