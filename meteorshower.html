@@ -141,9 +141,9 @@
     <li class='dropdown'>
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account<b class="caret"></b></a>
       <ul role="menu" class='dropdown-menu'>
+      {{#if currentUser}}
         <li><a onclick="$('#modal_create').modal('show');" href="#submit">Submit an Application</a></li>
         <li role="presentation" class="divider"></li>
-      {{#if currentUser}}
         <li>
           <p style='font-size:smaller;text-align:center;'>
             <a href='#'>
