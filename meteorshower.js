@@ -112,14 +112,17 @@ if (Meteor.isServer) {
                          description: items[i].description, 
                          cartridge_deps: items[i].cartridge_deps, 
                          score: items[i].score, 
-                         date: new Date()});
+                         date: items[i].date || new Date()});
     }
   });
   //var github_client_id = process.env.GITHUB_CLIENT || 'cc02855bd41dbfc4be72';
   var github_client_id = 'd351a0b78c1c05cb2730';
   //var github_client_secret = process.env.GITHUB_SECRET || '443ea5d64be6afada4acd946cf5b49878f4af4c8';
   var github_client_secret = 'f5b6451e1af9ea6f6becdf1e2156cf8e2cab467d';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61f86cbe8260684e4f5bb4c69f7c92e3916e93bd
   Accounts.loginServiceConfiguration.insert({
     service: "github",
     clientId: github_client_id,
