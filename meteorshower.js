@@ -99,7 +99,7 @@ if (Meteor.isServer) {
         "date":"2013-04-21T23:03:14.580Z",
         "score": 20,
         "image_url":"https://www.openshift.com/sites/default/files/redhat_shipment.png",
-        "demo_url":"http://showcase-rjdemo.rhcloud.com/",
+        "demo_url":"http://instantappstore-rjdemo.rhcloud.com/",
         "source_url":"https://github.com/ryanj/meteor-showcase.git",
         "cartridge_deps":"nodejs-0.6,mongodb-2.2"
       }];
