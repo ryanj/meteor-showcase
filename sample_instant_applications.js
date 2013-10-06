@@ -74,7 +74,7 @@ Meteor.startup(function () {
       "author":"community maintained",
       "date":"2013-04-21T23:03:14.580Z",
       "score": 5,
-      "image_url":"http://ianli.com/projects/img/sketchpad.png",
+      "image_url":"http://www.mevvy.com/wp-content/uploads/2013/04/Draw-Something-Logo-on-Mevvy.com_.png",
       "demo_url":"http://tutorialzine.com/2012/08/nodejs-drawing-game/",
       "source_url":"https://github.com/ryanj/ethersketch.git",
       "cartridge_deps":"nodejs-0.6"
@@ -97,9 +97,9 @@ Meteor.startup(function () {
       "date":"2013-04-21T23:03:14.580Z",
       "score": 20,
       "image_url":"https://www.openshift.com/sites/default/files/redhat_shipment.png",
-      "demo_url":"http://instantappstore-rjdemo.rhcloud.com/",
+      "demo_url":"http://app-shifter.rhcloud.com/",
       "source_url":"https://github.com/ryanj/meteor-showcase.git",
-      "cartridge_deps":"nodejs-0.6,mongodb-2.2"
+      "cartridge_deps":"nodejs-0.10,mongodb-2.2"
     }];
 
     var timestamp = (new Date()).getTime();
