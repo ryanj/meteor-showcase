@@ -62,11 +62,9 @@ if (Meteor.isClient) {
   Session.set('nav_settings', {name: 1, date: -1, score:-1});
   Session.set('sort_by', "date"); // default to sorting by date, descending
   Session.set('filter', '');
-  //Meteor.startup(function () {
-    $('#modal_edit').modal('show').on('shown', function(){
-      $('#modal_view').modal('hide');
-    });
-  //});
+  $('#modal_edit').modal('show').on('shown', function(){
+    $('#modal_view').modal('hide');
+  });
 
   Template.nav.events({
     'click #date_sort' : function (){

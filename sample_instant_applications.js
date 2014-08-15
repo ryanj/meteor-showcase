@@ -11,7 +11,7 @@ Meteor.startup(function () {
       "image_url":"http://upload.wikimedia.org/wikipedia/en/2/2a/Notepad.png",
       "demo_url":"http://etherpad.org/",
       "source_url":"https://github.com/openshift/etherpad-example.git",
-      "cartridge_deps":"nodejs-0.6,mongodb-2.2"
+      "cartridge_deps":"nodejs-0.10,mongodb-2.4"
     },
     { /* Slide presentations */
       "name":"Reveal.js",
@@ -22,7 +22,7 @@ Meteor.startup(function () {
       "image_url":"http://cdn.medleyweb.com/wp-content/uploads/2012/08/revealjs.png",
       "demo_url":"http://darkslides-rjdemo.rhcloud.com/",
       "source_url":"http://github.com/ryanj/darkslides.git",
-      "cartridge_deps":"nodejs-0.6,mongodb-2.2"
+      "cartridge_deps":"nodejs-0.10,mongodb-2.4"
     },
     { /* RSS Reader */
       "name":"TinyTinyRSS",
@@ -77,7 +77,7 @@ Meteor.startup(function () {
       "image_url":"http://www.mevvy.com/wp-content/uploads/2013/04/Draw-Something-Logo-on-Mevvy.com_.png",
       "demo_url":"http://tutorialzine.com/2012/08/nodejs-drawing-game/",
       "source_url":"https://github.com/ryanj/ethersketch.git",
-      "cartridge_deps":"nodejs-0.6"
+      "cartridge_deps":"nodejs-0.10"
     },
     { /* StackOverflow / Forums */
       "name":"BufferOverflow",
@@ -88,7 +88,7 @@ Meteor.startup(function () {
       "image_url":"http://www.iconsdb.com/icons/preview/gray/stackoverflow-2-xxl.png",
       "demo_url":"http://developer.eventbrite.com/discussion/",
       "source_url":"https://github.com/ryanj/StackUnderflow.js.git",
-      "cartridge_deps":"node.js-0.6,mongodb-2.2"
+      "cartridge_deps":"nodejs-0.10,mongodb-2.4"
     },
     { /* InstantApp Store / Quickstart Showcase (this app) */
       "name":"Instant App Store",
@@ -98,8 +98,8 @@ Meteor.startup(function () {
       "score": 20,
       "image_url":"https://www.openshift.com/sites/default/files/redhat_shipment.png",
       "demo_url":"http://app-shifter.rhcloud.com/",
-      "source_url":"https://github.com/ryanj/meteor-showcase.git",
-      "cartridge_deps":"nodejs-0.10,mongodb-2.2"
+      "source_url":"https://github.com/ryanj/instant-showcase.git",
+      "cartridge_deps":"nodejs-0.10,mongodb-2.4"
     }];
 
     var timestamp = (new Date()).getTime();
