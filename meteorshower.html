@@ -29,7 +29,7 @@
     </div>
     <div style='float:right;font-weight:bold;' class='span2'>
       <a class="dec" href="#"><b class='icon-minus-sign'></b></a>   
-      <span style='font-size:larger;font-weight:bold;' class='score'>{{score}}</score>
+      <span style='font-size:larger;font-weight:bold;' class='score'>{{score}}</span>
       <a class="inc" href="#"><b class='icon-plus-sign'></b></a>   
     </div>
   </div>
@@ -42,7 +42,7 @@
     <h3 class="item_title">{{app_name}}</h3>
   </div>
   <div style="padding:17px;overflow-y:auto;" class="modal-body">
-    <div class'image_url'><a href='{{demo_url}}'><img style='height:250px;width:250px;' src='{{image_url}}'/></a></div>
+    <div class='image_url'><a href='{{demo_url}}'><img style='height:250px;width:250px;' src='{{image_url}}'/></a></div>
     <div class='name'>{{app_name}}</div>
     <div class='description'>{{description}}</div>
     <div class='authored_by'>By: <span class='author'>{{author}}</span></div>
@@ -52,7 +52,7 @@
     <p><a href="{{clone_url}}" style='text-decoration:none;margin:0% 20% 0% 20%;width:60%;' class="shift btn btn-large btn-inverse btn-block">Run on OpenShift <b class='icon-cog'></b></a></p>
   </div>
   <div class="modal-footer">
-    {{# if currentUser }}<a href="#" $('#modal_edit').modal('show') && $('#modal_view').modal('hide');" style='margin-right:10px;' class="edit pull-left btn btn-info">Settings <b class='icon-wrench'></b></a>{{/if}}
+    {{# if currentUser }}<a href="#" onclick="$('#modal_edit').modal('show') && $('#modal_view').modal('hide');" style='margin-right:10px;' class="edit pull-left btn btn-info">Settings <b class='icon-wrench'></b></a>{{/if}}
     <a href="{{demo_url}}" style="margin-left:15px;" onclick="console.log('Opening app...');" class="pull-right btn btn-primary">Visit <b class='icon-globe'></b></a>
     <a href="#" data-dismiss="modal" onclick="$('#modal_view').modal('hide');" class="btn pull-right">Cancel <b class='icon-remove'></b></a>
   </div>

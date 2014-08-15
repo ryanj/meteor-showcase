@@ -5,7 +5,10 @@ if (Meteor.isServer) {
   var github_client_id = process.env.GITHUB_CLIENT || 'cc02855bd41dbfc4be72';
   //var github_client_secret = 'f5b6451e1af9ea6f6becdf1e2156cf8e2cab467d';
   var github_client_secret = process.env.GITHUB_SECRET || '443ea5d64be6afada4acd946cf5b49878f4af4c8';
-  Accounts.loginServiceConfiguration.insert({
+  ServiceConfiguration.configurations.remove({
+    service: "github"
+  });
+  ServiceConfiguration.configurations.insert({
     service: "github",
     clientId: github_client_id,
     secret: github_client_secret
