@@ -153,8 +153,7 @@ if (Meteor.isClient) {
       $('#modal_view').modal('show');
     },   
     'click a.view': function () {
-      console.log('not opening popup');
-      //$('#modal_view').modal('show');
+      $('#modal_view').modal('show');
     },   
     'click': function () {
       var item = Showcase.findOne({_id: this._id});
