@@ -196,38 +196,38 @@ if (Meteor.isClient) {
     return Session.equals("selected_item", this._id) ? "selected" : '';
   };
 
-  Template.view.events({
+  Template.itemview.events({
     'click a.edit' : function (){
       $('#modal_edit').modal('show');
       $('#modal_view').modal('hide');
     }
   });
-  Template.view.description = function(){
+  Template.itemview.description = function(){
     return Session.get('description');
   };
-  Template.view.app_name = function(){
+  Template.itemview.app_name = function(){
     return Session.get('name');
   };
-  Template.view.score = function(){
+  Template.itemview.score = function(){
     return Session.get('score');
   };
-  Template.view.image_url = function(){
+  Template.itemview.image_url = function(){
     return Session.get('image_url');
   };
-  Template.view.date = function(){
+  Template.itemview.date = function(){
     var s= new Date(Session.get('date'));
     return s.toDateString();
   };
-  Template.view.source_url = function(){
+  Template.itemview.source_url = function(){
     return Session.get('source_url');
   };
-  Template.view.demo_url = function(){
+  Template.itemview.demo_url = function(){
     return Session.get('demo_url');
   };
-  Template.view.cartridge_deps = function(){
+  Template.itemview.cartridge_deps = function(){
     return Session.get('cartridge_deps');
   };
-  Template.view.clone_url = function(){
+  Template.itemview.clone_url = function(){
     try{
       var name = Session.get('name');
       var source = Session.get('source_url');
@@ -243,7 +243,7 @@ if (Meteor.isClient) {
     }
     return link;
   };
-  Template.view.author = function(){
+  Template.itemview.author = function(){
     return Session.get('author');
   };
   
@@ -311,32 +311,32 @@ if (Meteor.isClient) {
       Session.set('selected_item', '');
     }
   });
-  Template.edit.description = function(){
+  Template.itemedit.description = function(){
     return Session.get('description');
   };
-  Template.edit.app_name = function(){
+  Template.itemedit.app_name = function(){
     return Session.get('name');
   };
-  Template.edit.score = function(){
+  Template.itemedit.score = function(){
     return Session.get('score');
   };
-  Template.edit.image_url = function(){
+  Template.itemedit.image_url = function(){
     return Session.get('image_url');
   };
-  Template.edit.source_url = function(){
+  Template.itemedit.source_url = function(){
     return Session.get('source_url');
   };
-  Template.edit.demo_url = function(){
+  Template.itemedit.demo_url = function(){
     return Session.get('demo_url');
   };
-  Template.edit.cartridge_deps = function(){
+  Template.itemedit.cartridge_deps = function(){
     return Session.get('cartridge_deps');
   };
-  Template.edit.author = function(){
+  Template.itemedit.author = function(){
     return Session.get('author');
   };
 
-  Template.submit.events({
+  Template.itemsubmit.events({
     'click .submit' : function (){
       $('#modal_create').modal('hide');
       var form_data = {};

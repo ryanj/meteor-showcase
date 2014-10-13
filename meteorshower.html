@@ -5,9 +5,9 @@
 <body>
   {{> nav}} 
   {{> list}} 
-  {{> submit}}
-  {{> edit}}
-  {{> view}}
+  {{> itemsubmit}}
+  {{> itemedit}}
+  {{> itemview}}
 </body>
 
 <template name="list">
@@ -35,7 +35,7 @@
   </div>
 </template>
 
-<template name="view">
+<template name="itemview">
 <div id='modal_view' class="modal fade in" style="display:none;">
   <div class="modal-header">
     <a href="#" style="margin-left:15px;" data-dismiss="modal" class="close pull-right;">&times;</a>
@@ -59,7 +59,7 @@
 </div>
 </template>
 
-<template name="edit">
+<template name="itemedit">
   <div class="edit modal fade in" style="display:none;" id="modal_edit">
   <div class="modal-header">
     <a href="#" data-dismiss="modal" class="close">&times;</a>
@@ -101,7 +101,7 @@
 </div>
 </template>
 
-<template name="submit">
+<template name="itemsubmit">
   <div class="create modal fade in" style="display:none;" id="modal_create">
   <div class="modal-header">
     <a href="#" data-dismiss="modal" class="close">&times;</a>
@@ -135,7 +135,7 @@
 <template name="nav">
 <div class="navbar navbar-inverse">
   <div class="navbar-inner">
-  <a class="brand" href="#">ShowCase</a>
+  <a class="brand" href="#">Showcase</a>
   <ul class="nav pull-right" role='navigation'>
     <li class="divider-vertical"></li>
     <li class='dropdown'>
